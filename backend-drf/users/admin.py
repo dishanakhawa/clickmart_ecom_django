@@ -4,7 +4,7 @@ from django.contrib import admin
 # this we need to modify everythime
 from django.contrib.auth import get_user_model
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
-
+# used for the hashing of the password
 
 # Register your models here.
 User = get_user_model()
@@ -12,5 +12,6 @@ User = get_user_model()
 class UserAdmin(BaseUserAdmin):
   list_display = ['email','first_name','last_name','is_staff']
   fieldsets = ()
+  # 
 
 admin.site.register(User, UserAdmin)

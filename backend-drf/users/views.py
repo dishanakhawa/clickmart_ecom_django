@@ -4,7 +4,7 @@ from .serializers import UserRegisterSerializer, UserSerializer
 # for basic we use apiview but major thing would be done through serializers 
 from rest_framework.response import Response
 from rest_framework import status
-
+# http://localhost:5500/index.html
 from rest_framework.permissions import IsAuthenticated
 # only accese pl we see the profike so its private
 

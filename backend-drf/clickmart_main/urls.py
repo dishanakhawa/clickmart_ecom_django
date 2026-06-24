@@ -18,9 +18,16 @@ from django.contrib import admin
 from django.urls import path, include
 from users import views as UserViews
 # inlcude we need to use to include the urls from the api app(we hve added)
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/v1/', include('api.urls')),  # include the urls from the api app
-    path('profile/',UserViews.ProfileView.as_view()),  # include the profile view from the users app
+    path('api/v1/', include('api.urls')), # include the urls from the api app
+    path('profile/',UserViews.ProfileView.as_view()),
+
+    
 ]
+
+if settings.DEBUG:
+  urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

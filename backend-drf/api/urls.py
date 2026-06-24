@@ -2,6 +2,7 @@
 from django.urls import path
 from users import views as UserViews
 from rest_framework_simplejwt.views import (TokenObtainPairView,TokenRefreshView,)
+from products import views as ProductViews
 
 urlpatterns = [
   path('register/', UserViews.RegisterView.as_view()), 
@@ -9,5 +10,14 @@ urlpatterns = [
   path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'), #refresh tokens,
   # we removed from the start of the token api
   path('profile/',UserViews.ProfileView.as_view()),  # include the profile view from the users app
+
+  # Categories api             
+  path('categories/', ProductViews.CategoryListView.as_view()),
+
+  # productlist api
+  path('products/', ProductViews.ProductListView.as_view()),
+
+# product detail api
+  path('products/<int:pk>/', ProductViews.ProductDetailView.as_view())
 ]
 # as_view is the the class based view which we have created in the views.py file of the user app
