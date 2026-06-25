@@ -3,7 +3,7 @@ from django.urls import path
 from users import views as UserViews
 from rest_framework_simplejwt.views import (TokenObtainPairView,TokenRefreshView,)
 from products import views as ProductViews
-
+from carts import views as CartViews
 urlpatterns = [
   path('register/', UserViews.RegisterView.as_view()), 
   path('token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),  #access tokens
@@ -18,6 +18,9 @@ urlpatterns = [
   path('products/', ProductViews.ProductListView.as_view()),
 
 # product detail api
-  path('products/<int:pk>/', ProductViews.ProductDetailView.as_view())
+  path('products/<int:pk>/', ProductViews.ProductDetailView.as_view()),
+
+# cart api
+  path('carts/', CartViews.CartListView.as_view())
 ]
 # as_view is the the class based view which we have created in the views.py file of the user app

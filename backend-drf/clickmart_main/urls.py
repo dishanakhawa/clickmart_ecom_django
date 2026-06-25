@@ -31,3 +31,5 @@ urlpatterns = [
 
 if settings.DEBUG:
   urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+#   this means that if the django is in the development(debug) mode serve the media file else 
+# /media/products/image.jpeg

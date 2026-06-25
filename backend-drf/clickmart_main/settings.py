@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_simplejwt',
     'products',
+    'carts',
     
 ]
 
@@ -154,3 +155,5 @@ SIMPLE_JWT = {
 }  
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR/ 'media'
+# ✅ MEDIA_URL → How the browser accesses uploaded files (URL path).
+# ✅ MEDIA_ROOT → Where uploaded files are physically stored on your system (folder path).

@@ -11,4 +11,4 @@ class ProductSerializer(serializers.ModelSerializer):
     fields='__all__'
 
 
-                    
+#now to click the products 
