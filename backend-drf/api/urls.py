@@ -20,7 +20,14 @@ urlpatterns = [
 # product detail api
   path('products/<int:pk>/', ProductViews.ProductDetailView.as_view()),
 
-# cart api
-  path('carts/', CartViews.CartListView.as_view())
+# carts api
+  path('cart/', CartViews.CartView.as_view()),
+
+  path('cart/add/', CartViews.AddToCartView.as_view()),
+
+  # path('cart/items/<int:item_id>/', CartViews.ManageCartItemView.as_view()),
+  path('cart/items/<int:item_id>/', CartViews.ManageCartItemView.as_view()),
+  
+
 ]
 # as_view is the the class based view which we have created in the views.py file of the user app
