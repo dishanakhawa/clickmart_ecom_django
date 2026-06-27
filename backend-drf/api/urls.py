@@ -4,6 +4,7 @@ from users import views as UserViews
 from rest_framework_simplejwt.views import (TokenObtainPairView,TokenRefreshView,)
 from products import views as ProductViews
 from carts import views as CartViews
+from orders import views as OrderViews
 urlpatterns = [
   path('register/', UserViews.RegisterView.as_view()), 
   path('token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),  #access tokens
@@ -27,6 +28,12 @@ urlpatterns = [
 
   # path('cart/items/<int:item_id>/', CartViews.ManageCartItemView.as_view()),
   path('cart/items/<int:item_id>/', CartViews.ManageCartItemView.as_view()),
+
+  path('orders/place/', OrderViews.PlaceOrderView.as_view()),
+
+  path('orders/', OrderViews.MyOrdersView.as_view()),
+
+  path('orders/<int:pk>/', OrderViews.OrderDetailView.as_view()),
   
 
 ]

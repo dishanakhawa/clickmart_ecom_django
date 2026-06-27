@@ -46,10 +46,13 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'products',
     'carts',
+    'orders',
+    'corsheaders',
     
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -157,3 +160,7 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR/ 'media'
 # ✅ MEDIA_URL → How the browser accesses uploaded files (URL path).
 # ✅ MEDIA_ROOT → Where uploaded files are physically stored on your system (folder path).
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:5173",
+    "http://localhost:5177",
+]
