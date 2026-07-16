@@ -32,7 +32,8 @@ function App() {
             <Route path="/dashboard" element={<Dashboard />}>
               <Route index element={<DashboardHome />} />
               <Route path="profile" element={<ProfileSettings />} />
-              <Route path="/order/success/:id?" element={<OrderSuccess />} />
+              <Route path="orders" element={<Orders />} />
+              {/* <Route path="/order/success/:id?" element={<OrderSuccess />} /> */}
             </Route>
           </Route>
           <Route path="/order/success/:id" element={<OrderSuccess />} />

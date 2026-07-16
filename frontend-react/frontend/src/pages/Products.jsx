@@ -62,8 +62,7 @@ const Products = () => {
         <div className="text-center mb-5">
           <h2 className="display-5 fw-bold mb-3">Featured Products</h2>
           <p className="lead text-muted">
-            Discover our curated selection of premium tech products and
-            accessories.
+            Discover the wide range of Fresh Prodcuts we offer. From fresh produce to pantry essentials, we have everything you need to keep your kitchen stocked and your meals delicious.
           </p>
         </div>
 
