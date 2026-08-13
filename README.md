@@ -70,6 +70,8 @@ GET	/api/v1/products/	List all e-commerce products
 GET	/api/v1/products/<id>/	Get details for a single product
 GET/POST	/api/v1/cart/	Retrieve or update cart contents
 POST	/api/v1/orders/	Create and place a new order
+
+
 👤 Author
 Disha Nakhawa – GitHub | LinkedIn
 
