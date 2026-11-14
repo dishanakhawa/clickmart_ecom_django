@@ -1,54 +1,73 @@
-🚀 Django Production Deployment (Step-by-Step)
-Docker + PostgreSQL + GitHub
 
-Django
-Docker & Docker Compose
-PostgreSQL
+# 🚀 Django Production Deployment (Step-by-Step)
+### Docker + PostgreSQL + GitHub 
+
+This repository demonstrates how to deploy a **Django application** from local development to **Github**
+- Django  
+- Docker & Docker Compose  
+- PostgreSQL  
+- GitHub 
+
 
 You will go step-by-step from:
 
-Local → Docker → GitHub 
+**Local → Docker → GitHub**
 
-🧰 Prerequisites
+---
+
+## 🧰 Prerequisites
+
 Install the following on your system:
 
-Git
-Python 3.10+
-pip
-Docker Desktop
-VS Code (recommended)
-📦 Step 1 — Clone the Project
+- Git
+- Python 3.10+  
+- pip  
+- Docker Desktop  
+- VS Code (recommended)
+
+## 📦 Step 1 — Clone the Project
+```sh
 git clone https://github.com/dev-rathankumar/django_clickmart_
 cd django_clickmart_
-Step 2 - Remove Git history
+```
+
+## Step 2 - Remove Git history
+```sh
 rm -rf .git
+```
 This wipes your commit history & remote. Now it is just files in your local computer, not a repo.
 
-Create your own GitHub repository
+## Create your own GitHub repository
 Go to GitHub → Click New Repository → Name: django-clickmart
 
-Re-initialize Git
+## Re-initialize Git
+```sh
 git init
 git add .
 git commit -m "Initial project setup"
 git branch -M main
 git remote add origin https://github.com/<YOUR-USERNAME>/<REPOSITORY-NAME>.git
 git push -u origin main
+```
 Now you have the full source code in your own repo.
 
-Run Django Locally (Without Docker)
+## Run Django Locally (Without Docker)
 Create virtual environment
-
+```sh
 cd backend-drf
 python3 -m venv env
 source env/bin/activate     # Mac / Linux
 # OR
 env\Scripts\activate        # Windows
+```
+
 Install dependencies
-
+```sh
 pip install -r requirements.txt
-Create .env file
+```
 
+Create ```.env``` file
+```sh
 DEBUG=True
 SECRET_KEY=<YOUR-SECRET-KEY>
 
@@ -62,29 +81,39 @@ DB_PORT=5432
 # Email Configuration
 EMAIL_HOST_USER=<YOUR-EMAIL-ADDRESS>
 EMAIL_HOST_PASSWORD=<PASSWORD> # USE APP PASSWORD IF YOU ARE USING GMAIL
-Create database tables and run the Django server
+```
 
+Create database tables and run the Django server
+```sh
 python manage.py migrate
 python manage.py runserver
-Create .env file inside /frontend/ directory and write:
+```
 
+Create ```.env``` file inside /frontend/ directory and write:
+```sh
 VITE_SERVER_BASE_URL=http://127.0.0.1:8000/api/v1
+```
 And run the frontend - React
-
+```sh
 npm install
 npm run dev
+```
+
 Go to http://localhost:5173/
 
 Optional: You can now create superuser and add some products.
 
 To learn about deployment, continue to next step...
 
-Install and verify Docker and Docker Compose
+## Install and verify Docker and Docker Compose
+```sh
 docker --version
 docker compose version
-Create Dockerfile for backend
-Create a new file "Dockerfile" inside /backend-drf/ folder
+```
 
+## Create Dockerfile for backend
+Create a new file "Dockerfile" inside /backend-drf/ folder
+```sh
 # Purpose: A Dockerfile is a step-by-step instruction file that tells Docker how to build and run our application.
 FROM python:3.10-slim
 
@@ -108,9 +137,11 @@ EXPOSE 8000
 # gunicorn = production server, clickmart_main.wsgi:application = Django entry point, --bind 0.0.0.0:8000 = external traffic. Reminaing: tuning options
 # A worker is just one instance of your Django app running inside Gunicorn.
 CMD ["gunicorn", "clickmart_main.wsgi:application", "--bind", "0.0.0.0:8000", "--workers", "3" , "--timeout", "180"]
-Create Dockerfile for frontend
-Create a new file "Dockerfile" inside /frontend/ folder
+```
 
+## Create Dockerfile for frontend
+Create a new file "Dockerfile" inside /frontend/ folder
+```sh
 # Stage 1: Build
 FROM node:18 AS build
 
@@ -137,7 +168,10 @@ COPY --from=build /app/dist /usr/share/nginx/html
 
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
-On the root directory, create a file "docker-compose.yml"
+```
+
+## On the root directory, create a file "docker-compose.yml"
+```sh
 services:
   db:
     image: postgres:16-alpine
@@ -182,8 +216,10 @@ services:
   # Data persists even if container stops or restarts
 volumes:
   postgres_data:
-Make sure to create a copy of .env and name it as .env.docker
+```
 
+Make sure to create a copy of ```.env``` and name it as ```.env.docker```
+```sh
 SECRET_KEY=<YOUR-DJANGO-SECRETKEY>
 DEBUG=True
 
@@ -197,17 +233,20 @@ DB_PORT=5432
 
 EMAIL_HOST_USER=<YOUR-EMAIL-ADDRESS>
 EMAIL_HOST_PASSWORD=<YOUR-PASSWORD> # app password if you're using Gmail account
-Run this command to Dockerize your project:
+```
 
+Run this command to Dockerize your project:
+```sh
 docker compose up --build
+```
 Your project is now Dockerized ✅
 
 See the docker container health:
-
+```sh
 docker compose ps
+```
+
 You can try creating superuser inside Docker container.
-
+```sh
 docker compose exec backend python manage.py createsuperuser
-
-
-                  
+```
