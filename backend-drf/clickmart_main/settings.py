@@ -27,7 +27,7 @@ SECRET_KEY = config("SECRET_KEY")  # read the secret key from the .env file
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config("DEBUG", default=False, cast=bool)  # read the debug value from the .env file and cast it to boolean
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]  # read the allowed hosts from the .env file and split it into a list
 
 
 # Application definition
@@ -54,6 +54,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -100,8 +101,14 @@ DATABASES = {
         'PASSWORD': config("DB_PASSWORD"),
         'HOST': config("DB_HOST"),
         'PORT': config("DB_PORT"),
+        'OPTIONS': {
+          'sslmode': 'require',
+        },
     }
 }
+# Django reads database credentials from environment variables.
+# sslmode: require ensures the connection uses SSL.
+# Neon PostgreSQL supports SSL connections.
 
 # Password validation
 # https://docs.djangoproject.com/en/6.0/ref/settings/#auth-password-validators
@@ -138,6 +145,22 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
 STATIC_URL = 'static/'
+#STATIC_ROOT tells Django where to collect all static files during deployment.
+#CompressedManifestStaticFilesStorage enables compressed static files and hashed filenames for efficient caching.
+# When we deploy, collectstatic will gather the files into staticfiles, and WhiteNoise will serve them.
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+STORAGES = {
+    "default": {
+        "BACKEND": "django.core.files.storage.FileSystemStorage",
+    },
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
+}
+STATIC_ROOT = BASE_DIR / 'static'  # this is the folder where all the static files will be collected when we run the collectstatic command
+STATICFILES_DIRS = [
+        BASE_DIR / 'clickmart_main' / 'static',  # this is the folder where we will put all the static files for our project
+]
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
@@ -163,6 +186,7 @@ MEDIA_ROOT = BASE_DIR/ 'media'
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
     "http://localhost:5177",
+    "https://clickmart-ecom-django.onrender.com"
 ]
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
