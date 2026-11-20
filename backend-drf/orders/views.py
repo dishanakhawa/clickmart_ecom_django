@@ -65,7 +65,11 @@ class PlaceOrderView(APIView):
         cart.save()
 
         # send the notification email
-        send_order_notification(order)
+        # send_order_notification(order) this is the part of the code
+        try:
+            send_order_notification(order)
+        except Exception as e:
+            print(f"Order email failed: {e}")
         # send the response to frontend
         serializer = OrderSerializer(order)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
