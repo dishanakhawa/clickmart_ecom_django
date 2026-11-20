@@ -13,3 +13,5 @@ whitenoise==6.9.0
 # WhiteNoise allows Django to serve static files without needing a separate static-file server.
 cloudinary
 django-cloudinary-storage
+resend
+# because smtp doesn't work on render, we are using resend to send emails
