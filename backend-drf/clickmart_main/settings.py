@@ -48,6 +48,8 @@ INSTALLED_APPS = [
     'carts',
     'orders',
     'corsheaders',
+    'cloudinary',
+    'cloudinary_storage',
     
 ]
 
@@ -151,7 +153,8 @@ STATIC_URL = 'static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 STORAGES = {
     "default": {
-        "BACKEND": "django.core.files.storage.FileSystemStorage",
+        "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
+        # because we are using cloudinary to store the media files, we need to use the MediaCloudinaryStorage backend
     },
     "staticfiles": {
         "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
@@ -183,6 +186,14 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR/ 'media'
 # ✅ MEDIA_URL → How the browser accesses uploaded files (URL path).
 # ✅ MEDIA_ROOT → Where uploaded files are physically stored on your system (folder path).
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': config('CLOUDINARY_CLOUD_NAME'),
+    'API_KEY': config('CLOUDINARY_API_KEY'),
+    'API_SECRET': config('CLOUDINARY_API_SECRET'),
+    'SECURE': True,
+}
+# confuguring the cloudinary storage backend with the credentials from the .env file
+
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
     "http://localhost:5177",

@@ -11,3 +11,5 @@ sqlparse==0.5.4
 gunicorn==23.0.0
 whitenoise==6.9.0
 # WhiteNoise allows Django to serve static files without needing a separate static-file server.
+cloudinary
+django-cloudinary-storage
